@@ -41,6 +41,7 @@ const gnome = () =>
   new Promise((res, rej) => {
     pacman(packages)
       .then(() => systemctl(`enable lightdm.service`))
+      .then(() => systemctl(`enable NetworkManager.service`))
       .then((code) => res(code))
       .catch((error) => rej(error));
   });
