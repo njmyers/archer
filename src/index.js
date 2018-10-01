@@ -1,4 +1,5 @@
 import { pipeAsync } from 'smalldash';
+import networ from './tasks/network';
 import graphics from './tasks/graphics';
 import deepin from './tasks/deepin';
 import fonts from './tasks/fonts';
