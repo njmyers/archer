@@ -2,13 +2,18 @@ import shell from 'shelljs';
 import aur from '../commands/aur';
 import taskRunner from '../task-runner';
 
-const installable = ['adobe-base-14-fonts', 'otf-san-francisco', 'otf-sfmono'];
+const installable = [
+  'capitaine-cursors',
+  'la-capitaine-icon-theme',
+  'macos-icon-theme',
+  'x-arc-white',
+];
 
-const fonts = (arg, options) =>
+const theme = (arg, options) =>
   new Promise((res, rej) => {
     aur(installable)
       .then((response) => res(response))
       .catch((error) => rej(error));
   });
 
-export default taskRunner(fonts);
+export default taskRunner(theme);

@@ -573,6 +573,13 @@
     "@babel/helper-plugin-utils" "^7.0.0"
     "@babel/plugin-transform-flow-strip-types" "^7.0.0"
 
+"@babel/runtime@^7.1.2":
+  version "7.1.2"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.1.2.tgz#81c89935f4647706fc54541145e6b4ecfef4b8e3"
+  integrity sha512-Y3SCjmhSupzFB6wcv1KmmFucH6gDVnI30WjOcicV10ju0cZjak3Jcs67YLIXBrmZYw1xCrVeJPbycFwrqNyxpg==
+  dependencies:
+    regenerator-runtime "^0.12.0"
+
 "@babel/template@^7.1.0", "@babel/template@^7.1.2":
   version "7.1.2"
   resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.1.2.tgz#090484a574fef5a2d2d7726a674eceda5c5b5644"
@@ -2702,7 +2709,7 @@ regenerate@^1.4.0:
   resolved "https://registry.yarnpkg.com/regenerate/-/regenerate-1.4.0.tgz#4a856ec4b56e4077c557589cae85e7a4c8869a11"
   integrity sha512-1G6jJVDWrt0rK99kBjvEtziZNCICAuvIPkSiUFIQxVP06RCVpq3dmDo2oi6ABpYaDYaTRr67BEhL8r1wgEZZKg==
 
-regenerator-runtime@^0.12.1:
+regenerator-runtime@^0.12.0:
   version "0.12.1"
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.12.1.tgz#fa1a71544764c036f8c49b13a08b2594c9f8a0de"
   integrity sha512-odxIc1/vDlo4iZcfXqRYFj0vpXFNoGdKMAUieAlFYO6m/nl5e9KR/beGf41z4a1FI+aQgtjhuaSlDxQ0hmkrHg==
@@ -2999,10 +3006,12 @@ slice-ansi@0.0.4:
   resolved "https://registry.yarnpkg.com/slice-ansi/-/slice-ansi-0.0.4.tgz#edbf8903f66f7ce2f8eafd6ceed65e264c831b35"
   integrity sha1-7b+JA/ZvfOL46v1s7tZeJkyDGzU=
 
-smalldash@^1.1.12:
-  version "1.1.12"
-  resolved "https://registry.yarnpkg.com/smalldash/-/smalldash-1.1.12.tgz#af0920244225d2d39d167568d90736c896778dbe"
-  integrity sha512-E7YiBA25qHmIleQ0INDoKscaHx7XmuNS+2esWcr8B1dD8VqNPAgZUd50EUB2Eu5viuSNkIHCr1bhKGZBcOFeyQ==
+smalldash@^1.1.15:
+  version "1.1.15"
+  resolved "https://registry.yarnpkg.com/smalldash/-/smalldash-1.1.15.tgz#1188725853269c26ad3c049b9c7aed1298f91fb5"
+  integrity sha512-VSvaJmMSQFMmprw/ef0XQcUC0JMWrze11cMfwQPNlpdkKzP8w7nNrqzWRjgtzvnkqnUDCze9zXu4+zTVPM9TeA==
+  dependencies:
+    "@babel/runtime" "^7.1.2"
 
 snapdragon-node@^2.0.1:
   version "2.1.1"

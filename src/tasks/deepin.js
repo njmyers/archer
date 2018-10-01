@@ -1,13 +1,16 @@
 import pacman from '../commands/pacman';
+import aur from '../commands/aur';
 import taskRunner from '../task-runner';
 
-const packages = ['vulkan-intel', 'mesa'];
+const packages = ['deepin', 'ddm'];
+const aurPackages = ['deepin-topbar'];
 
-const graphics = (env) =>
+const deepin = () =>
   new Promise((res, rej) => {
     pacman(packages)
+      .then((code) => aur(aurPackages))
       .then((code) => res(code))
       .catch((error) => rej(error));
   });
 
-export default taskRunner(graphics);
+export default taskRunner(deepin);
