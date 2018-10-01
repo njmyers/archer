@@ -24,19 +24,19 @@ const aur = (packages, options) => {
           const destination = path.resolve(directory, string);
 
           if (!validateDirectory(destination, { make: false })) {
-            shell.cd(destination);
             // return a promise
             return git(`clone ${url} ${destination}`)
-              .then(() => makepkg())
-              .then((code) => res(code))
-              .catch((error) => rej(error));
-          } else {
-            // return a promise
-            return git(`pull`)
               .then(() => {
                 shell.cd(destination);
                 return makepkg();
               })
+              .then((code) => res(code))
+              .catch((error) => rej(error));
+          } else {
+            shell.cd(destination);
+            // return a promise
+            return git(`pull`)
+              .then(() => makepkg())
               .then((code) => res(code))
               .catch((error) => rej(error));
           }
