@@ -1,0 +1,46 @@
+{
+  "name": "@njmyers/arch-install",
+  "version": "0.0.1",
+  "description": "",
+  "main": "build/archer.cjs.js",
+  "module": "build/archer.esm.js",
+  "scripts": {
+    "prerollup": "shx rm -rf build",
+    "rollup": "rollup -c rollup.config.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prettier": "prettier 'src/**/*.{.test.js,js,jsx,json}' --write"
+  },
+  "bin": {
+    "archer": "node scripts/cli.js",
+    "aur": "node scripts/aur.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^2.4.1",
+    "commander": "^2.18.0",
+    "prompts": "^1.1.1",
+    "shelljs": "^0.8.2",
+    "smalldash": "^1.1.12"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.1.2",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+    "@babel/plugin-transform-regenerator": "^7.0.0",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-flow": "^7.0.0",
+    "flow-bin": "^0.81.0",
+    "husky": "^1.0.1",
+    "lint-staged": "^7.3.0",
+    "path": "^0.12.7",
+    "prettier": "^1.14.3",
+    "rollup": "^0.66.2",
+    "rollup-plugin-babel": "^4.0.3",
+    "rollup-plugin-commonjs": "^9.1.8",
+    "rollup-plugin-flow": "^1.1.1",
+    "rollup-plugin-node-builtins": "^2.1.2",
+    "rollup-plugin-node-globals": "^1.4.0",
+    "rollup-plugin-node-resolve": "^3.4.0",
+    "shx": "^0.3.2"
+  }
+}
