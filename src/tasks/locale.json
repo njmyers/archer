@@ -1,12 +1,16 @@
 {
   "ln": [
     {
-      "target": "/usr/share/zoneinfo/US/Eastern",
+      "target": "/usr/share/zoneinfo/America/New_York",
       "destination": "/etc/localtime",
       "sudo": true
     }
   ],
   "exec": [
+    {
+      "command": "hwclock --systohc",
+      "sudo": true
+    },
     {
       "command": "locale-gen",
       "sudo": true
