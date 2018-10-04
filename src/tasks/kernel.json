@@ -1,0 +1,3 @@
+{
+  "pacman": ["linux", "linux-headers", "base-devel"]
+}

@@ -1,0 +1,9 @@
+{
+  "ln": [
+    {
+      "target": "/usr/share/zoneinfo/US/Eastern",
+      "destination": "/etc/localtime",
+      "sudo": true
+    }
+  ]
+}

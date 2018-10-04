@@ -1,0 +1,44 @@
+{
+  "pacman": [
+    "gnome-shell",
+    "nautilus",
+    "wayland",
+    "file-roller",
+    "gnome-backgrounds",
+    "gnome-calculator",
+    "gnome-color-manager",
+    "gnome-control-center",
+    "gnome-dictionary",
+    "gnome-disk-utility",
+    "gnome-menus",
+    "gnome-screenshot",
+    "gnome-system-monitor",
+    "gnome-user-share",
+    "grilo-plugins",
+    "gvfs",
+    "gvfs-afc",
+    "gvfs-goa",
+    "gvfs-google",
+    "gvfs-nfs",
+    "gvfs-smb",
+    "mousetweaks",
+    "networkmanager",
+    "rygel",
+    "simple-scan",
+    "sushi",
+    "vino",
+    "xdg-user-dirs-gtk",
+    "gdm",
+    "gnome-tweak-tool"
+  ],
+  "systemctl": [
+    {
+      "sevice": "gdm",
+      "state": "enable"
+    },
+    {
+      "sevice": "NetworkManager",
+      "state": "enable"
+    }
+  ]
+}

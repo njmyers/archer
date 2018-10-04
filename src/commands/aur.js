@@ -6,6 +6,7 @@ import { pipeAsync } from 'smalldash';
 import taskRunner from '../task-runner';
 import git from './git';
 import makepkg from './makepkg';
+import namedFunction from './named-function';
 import validateDirectory from './validate-directory';
 import acceptArgs from './accept-args';
 
@@ -16,8 +17,9 @@ const aur = (packages, options) => {
   // validate aur directory
   validateDirectory(directory, { make: true });
   // return a function that returns a promise
-  const tasks = packages.map((string) =>
-    taskRunner(
+  const tasks = packages.map((string) => {
+    const fn = namedFunction(
+      string,
       () =>
         new Promise((res, rej) => {
           const url = `https://aur.archlinux.org/${string}.git`;
@@ -28,7 +30,7 @@ const aur = (packages, options) => {
             return git(`clone ${url} ${destination}`)
               .then(() => {
                 shell.cd(destination);
-                return makepkg();
+                return makepkg('-si');
               })
               .then((code) => res(code))
               .catch((error) => rej(error));
@@ -36,19 +38,20 @@ const aur = (packages, options) => {
             shell.cd(destination);
             // return a promise
             return git(`pull`)
-              .then(() => makepkg())
+              .then(() => makepkg('-si'))
               .then((code) => res(code))
               .catch((error) => rej(error));
           }
-        }),
-      `aur ${string}`
-    )
-  );
+        })
+    );
+
+    return taskRunner(fn);
+  });
   // construct async pipeline
   const pipeline = pipeAsync(...tasks);
   // return a new promise at resolution of the ENTIRE async pipelines
   return new Promise((res, rej) => {
-    pipeline()
+    pipeline({ options })
       .then((response) => res(response))
       .catch((error) => rej(error));
   });

@@ -1,27 +1,7 @@
-import { spawn } from 'child_process';
+import createSpawn from './create-spawn';
+import acceptArgs from './accept-args';
 
-const makepkg = (command, options = {}) =>
-  new Promise((res, rej) => {
-    const makepkgProcess = spawn('makepkg', ['-si'], {
-      ...options,
-      stdio: 'inherit',
-    });
+// default options
+const defaults = {};
 
-    makepkgProcess.on('close', (code) => {
-      if (code === 0) {
-        res(code);
-      } else {
-        rej(`exit with error code: ${code}`);
-      }
-    });
-
-    makepkgProcess.on('close', (code) => {
-      if (code === 0) {
-        res(code);
-      } else {
-        rej(`exit with error code: ${code}`);
-      }
-    });
-  });
-
-export default makepkg;
+export default (...args) => acceptArgs(args, defaults, createSpawn('makepkg'));

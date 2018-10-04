@@ -2,11 +2,11 @@ import sudo from './sudo';
 import acceptArgs from './accept-args';
 
 const pacman = (packages, options) =>
-  new Promise((res, rej) => {
-    sudo(`pacman -S ${packages.reduce((prevString, string) => `${prevString} ${string}`)}`)
-      .then((code) => res(code))
-      .catch((code) => rej(code));
-  });
+  sudo(
+    `pacman -S ${packages.reduce(
+      (prevString, string) => `${prevString} ${string}`
+    )} ${options.silent ? '--noconfirm' : ''}`
+  );
 
 // default options
 const defaults = {};

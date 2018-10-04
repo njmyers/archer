@@ -1,0 +1,13 @@
+{
+  "aur": [
+    "dropbox",
+    "dropbox-cli",
+    "nautilus-dropbox",
+    "google-chrome",
+    "keeweb-desktop",
+    "masterpdfeditor",
+    "postman-bin",
+    "spotify"
+  ],
+  "pacman": ["firefox", "chromium", "termite"]
+}

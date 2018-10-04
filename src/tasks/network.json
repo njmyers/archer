@@ -1,0 +1,13 @@
+{
+  "pacman": ["networkmanager", "net-tools"],
+  "systemctl": [
+    {
+      "service": "dhcpcd",
+      "state": "enable"
+    },
+    {
+      "service": "NetworkManager",
+      "state": "enable"
+    }
+  ]
+}
