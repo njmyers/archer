@@ -1,3 +1,28 @@
 {
-  "aur": ["adobe-base-14-fonts", "otf-san-francisco", "otf-sfmono"]
+  "aur": ["adobe-base-14-fonts", "otf-san-francisco", "otf-sfmono"],
+  "ln": [
+    {
+      "target": "/etc/fonts/conf.avail/70-no-bitmaps.conf",
+      "destination": "/etc/fonts/conf.d",
+      "sudo": true
+    },
+    {
+      "target": "/etc/fonts/conf.avail/10-sub-pixel-rgb.conf",
+      "destination": "/etc/fonts/conf.d",
+      "sudo": true
+    },
+    {
+      "target": "/etc/fonts/conf.avail/11-lcdfilter-default.conf",
+      "destination": "/etc/fonts/conf.d",
+      "sudo": true
+    }
+  ],
+  "exec": [
+    {
+      "command": "sudo curl https://gist.githubusercontent.com/njmyers/22b28cf8c3ed12639adb01ec142e267d/raw/20bf48ce50af441ad52f15777155c7d7eea79e38/local.conf -o /etc/fonts/local.conf"
+    },
+    {
+      "command": "fc-cache"
+    }
+  ]
 }
