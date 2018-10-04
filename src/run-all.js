@@ -1,4 +1,13 @@
-import { sudo, pacman, ln, aur, systemctl } from './commands';
+import {
+  sudo,
+  pacman,
+  ln,
+  unlink,
+  aur,
+  systemctl,
+  createSpawn,
+} from './commands';
+
 import { pipeAsync } from 'smalldash';
 import taskRunner from './task-runner';
 import namedFunction from './commands/named-function';
@@ -26,6 +35,26 @@ const dispatcher = (entry) => {
         ...values.map(({ target, destination, ...options } = {}) => () =>
           ln(`${target} ${destination}`, options)
         )
+      );
+    // map out the symlinks to remove
+    case 'unlink':
+      return pipeAsync(
+        ...values.map(({ target, ...options } = {}) => () =>
+          unlink(`${target}`, options)
+        )
+      );
+
+    // pure exec funtion
+    case 'exec':
+      return pipeAsync(
+        ...values.map(({ command, sudo: sudoOption, ...options }) => () => {
+          const parts = command.split(' ');
+
+          return sudoOption
+            ? sudo(parts, options)
+            : createSpawn(parts[0])(parts.slice(1), options);
+          //
+        })
       );
   }
 };

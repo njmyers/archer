@@ -5,5 +5,11 @@
       "destination": "/etc/localtime",
       "sudo": true
     }
+  ],
+  "exec": [
+    {
+      "command": "locale-gen",
+      "sudo": true
+    }
   ]
 }

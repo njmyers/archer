@@ -2,15 +2,15 @@ import createSpawn from './create-spawn';
 import sudo from './sudo';
 import acceptArgs from './accept-args';
 
-const ln = (args, options) => {
+const unlink = (args, options) => {
   const { sudo: sudoOption, ...rest } = options;
 
   return sudoOption
-    ? sudo(`ln -sf ${Array.isArray(args) ? args.join(' ') : args}`, options)
-    : createSpawn('ln')(['-sf', ...args], options);
+    ? sudo(`unlink ${Array.isArray(args) ? args.join(' ') : args}`, options)
+    : createSpawn('unlink')(args, options);
 };
 
 // default options
 const defaults = {};
 
-export default (...args) => acceptArgs(args, defaults, ln);
+export default (...args) => acceptArgs(args, defaults, unlink);
