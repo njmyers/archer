@@ -1,21 +1,17 @@
 import fs from 'fs';
 import path from 'path';
-import { homedir } from 'os';
 import shell from 'shelljs';
 import { pipeAsync } from 'smalldash';
 import taskRunner from '../task-runner';
 import git from './git';
 import makepkg from './makepkg';
 import namedFunction from './named-function';
-import validateDirectory from './validate-directory';
+import aurDir from '../library/aur-dir';
+import validateDirectory from '../library/validate-directory';
 import acceptArgs from './accept-args';
 
-const current = process.cwd();
-const directory = path.resolve(homedir(), '.aur');
-
 const aur = (packages, options) => {
-  // validate aur directory
-  validateDirectory(directory, { make: true });
+  const aurPath = aurDir();
   // return a function that returns a promise
   const tasks = packages.map((string) => {
     const fn = namedFunction(
@@ -23,14 +19,14 @@ const aur = (packages, options) => {
       () =>
         new Promise((res, rej) => {
           const url = `https://aur.archlinux.org/${string}.git`;
-          const destination = path.resolve(directory, string);
+          const destination = path.resolve(aurPath, string);
 
           if (!validateDirectory(destination, { make: false })) {
             // return a promise
             return git(`clone ${url} ${destination}`)
               .then(() => {
                 shell.cd(destination);
-                return makepkg('-si');
+                return makepkg('-si --needed', options);
               })
               .then((code) => res(code))
               .catch((error) => rej(error));
@@ -38,7 +34,7 @@ const aur = (packages, options) => {
             shell.cd(destination);
             // return a promise
             return git(`pull`)
-              .then(() => makepkg('-si'))
+              .then(() => makepkg('-si --needed', options))
               .then((code) => res(code))
               .catch((error) => rej(error));
           }

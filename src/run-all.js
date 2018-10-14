@@ -12,28 +12,28 @@ import { pipeAsync } from 'smalldash';
 import taskRunner from './task-runner';
 import namedFunction from './commands/named-function';
 
-const dispatcher = (entry) => {
+const dispatcher = (options) => (entry) => {
   const [key, values] = entry;
 
   switch (key) {
     // map pacman packages to get
     case 'pacman':
-      return () => pacman(values);
+      return () => pacman(values, options);
     // map aur packages to download
     case 'aur':
-      return () => aur(values);
+      return () => aur(values, options);
     // map out services to set the state on
     case 'systemctl':
       return pipeAsync(
         ...values.map(({ service, state } = {}) => () =>
-          systemctl(`${state} ${service}.service`)
+          systemctl(`${state} ${service}.service`, options)
         )
       );
     // map out the symlinks to make
     case 'ln':
       return pipeAsync(
-        ...values.map(({ target, destination, ...options } = {}) => () =>
-          ln(`${target} ${destination}`, options)
+        ...values.map(({ target, destination, ...localOptions } = {}) => () =>
+          ln(`${target} ${destination}`, { ...options, ...localOptions })
         )
       );
     // map out the symlinks to remove
@@ -47,14 +47,19 @@ const dispatcher = (entry) => {
     // pure exec funtion
     case 'exec':
       return pipeAsync(
-        ...values.map(({ command, sudo: sudoOption, ...options }) => () => {
-          const parts = command.split(' ');
+        ...values.map(
+          ({ command, sudo: sudoOption, ...localOptions }) => () => {
+            const parts = command.split(' ');
 
-          return sudoOption
-            ? sudo(parts, options)
-            : createSpawn(parts[0])(parts.slice(1), options);
-          //
-        })
+            return sudoOption
+              ? sudo(parts, { ...options, ...localOptions })
+              : createSpawn(parts[0])(parts.slice(1), {
+                  ...options,
+                  ...localOptions,
+                });
+            //
+          }
+        )
       );
   }
 };
@@ -68,7 +73,7 @@ const runAll = (config, options) =>
       // map tasks into a named function
       const fn = namedFunction(
         name,
-        pipeAsync(...Object.entries(tasks).map(dispatcher))
+        pipeAsync(...Object.entries(tasks).map(dispatcher(options)))
       );
       // pass the named function to the task runner to execute
       return taskRunner(fn);

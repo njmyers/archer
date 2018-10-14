@@ -5,7 +5,7 @@ const pacman = (packages, options) =>
   sudo(
     `pacman -S ${packages.reduce(
       (prevString, string) => `${prevString} ${string}`
-    )} ${options.silent ? '--noconfirm' : ''}`
+    )} --needed --noconfirm`
   );
 
 // default options

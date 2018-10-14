@@ -5,11 +5,9 @@ import { homedir } from 'os';
 import { pipeAsync } from 'smalldash';
 import directory from '@njmyers/directory';
 import prompts from 'prompts';
-import validateDirectory from '../../commands/validate-directory';
+import archerDir from '../../library/archer-dir';
 
-const configDir = path.resolve(homedir(), '.archer');
-validateDirectory(configDir);
-const configPath = path.resolve(configDir, 'config.json');
+const configPath = path.resolve(archerDir(), 'config.json');
 
 const getConfig = (options): Promise<any> =>
   new Promise((res, rej) => {

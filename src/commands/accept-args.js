@@ -1,6 +1,20 @@
-const flatten = (array) =>
-  Array.isArray(array) ? [].concat(...array.map(flatten)) : array;
+/**
+ * Accepts an array (nested?) of strings or a string
+ * Flattens the string or array of strings into a flattened array
+ * All strings are also broken apart by spaces
+ * We end up with an argument list for spawn style execution
+ */
+const flatten = (args) =>
+  Array.isArray(args) ? [].concat(...args.map(flatten)) : args.split(' ');
 
+/**
+ * We can use this function to format our commands to accepts variadic arguments
+ * The arguments can be either string commands like 'ls -la'
+ * Or array style commands like ['ls', '-la']
+ * The last argument can be the options argument that is passed on to the command.
+ * Options object is then passed on to the spawn function
+ * For 'command style' options and flags simply pass them as string arguments
+ */
 const acceptArgs = (args, defaults, fn) => {
   const length = args.length;
   // we can accept args as array of packages or list of packages

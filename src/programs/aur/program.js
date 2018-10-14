@@ -1,6 +1,7 @@
 import program from 'commander';
 import update from 'update-notifier';
 import aur from '../../commands/aur';
+import getPackageList from './get-package-list';
 // package.json
 import pkg from '../../../package.json';
 
@@ -10,11 +11,12 @@ program
   .version(pkg.version, '-v --version')
   .option('-s --silent', 'toggles silent mode', true)
   .option('-i --interactive', 'toggles interactive mode', true)
+  .option('-u --update', 'update all aur packages', false)
   .usage('[...packages] [...options]')
   .action((...args) => {
-    const [options, ...packages] = args.reverse();
-    // install
-    aur(packages.reverse(), {
+    const { options, packages } = getPackageList(args);
+
+    aur(packages, {
       silent: options.silent,
       interactive: options.interactive,
     })

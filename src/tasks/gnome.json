@@ -33,11 +33,11 @@
   ],
   "systemctl": [
     {
-      "sevice": "gdm",
+      "service": "gdm",
       "state": "enable"
     },
     {
-      "sevice": "NetworkManager",
+      "service": "NetworkManager",
       "state": "enable"
     }
   ]
