@@ -1,11 +1,8 @@
 import sudo from './sudo';
 import acceptArgs from './accept-args';
 
-/**
- * Enables systemctl command
- * @return {Promise} resolves or rejects the error code
- */
-const systemctl = (string, options) => sudo(`systemctl ${string}`);
+/** Enables systemctl command */
+const systemctl = (args, options) => sudo(['systemctl', ...args], options);
 
 // default options
 const defaults = {};

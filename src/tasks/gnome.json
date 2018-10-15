@@ -28,17 +28,35 @@
     "sushi",
     "vino",
     "xdg-user-dirs-gtk",
-    "gdm",
     "gnome-tweak-tool"
   ],
+  "aur": ["plymouth", "gdm-plymouth"],
   "systemctl": [
     {
       "service": "gdm",
+      "state": "disable"
+    },
+    {
+      "service": "gdm-plymouth",
       "state": "enable"
     },
     {
       "service": "NetworkManager",
       "state": "enable"
+    }
+  ],
+  "exec": [
+    {
+      "command": "plymouth-set-default-theme script",
+      "sudo": true
+    },
+    {
+      "command": "mkinitcpio -p linux",
+      "sudo": true
+    },
+    {
+      "command": "grub-mkconfig -o /boot/grub/grub.cfg",
+      "sudo": true
     }
   ]
 }

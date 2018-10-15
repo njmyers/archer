@@ -1,16 +1,13 @@
 // @flow
 import { spawn } from 'child_process';
+import flatten from '../library/flatten';
 
-type Args = string | Array<string>;
-
-/** Properly format the arguments for spawning */
-const formatArgs = (args: Args) =>
-  Array.isArray(args) ? args : args.split(' ');
+type Args = string | Array<string | Args>;
 
 /** Stubs a spawn child process */
 const createSpawn = (cmd: string) => (args: Args, options = {}): Promise<any> =>
   new Promise((res, rej) => {
-    const child = spawn(cmd, formatArgs(args), {
+    const child = spawn(cmd, flatten(args), {
       stdio: 'inherit',
       // put options second so we can override stdio
       ...options,
