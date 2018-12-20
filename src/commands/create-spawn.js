@@ -9,6 +9,7 @@ const createSpawn = (cmd: string) => (args: Args, options = {}): Promise<any> =>
   new Promise((res, rej) => {
     const child = spawn(cmd, flatten(args), {
       stdio: 'inherit',
+      shell: true,
       // put options second so we can override stdio
       ...options,
     });
