@@ -7,7 +7,14 @@
     "keeweb-desktop",
     "masterpdfeditor",
     "postman-bin",
-    "spotify"
+    "spotify",
+    "zoom",
+    "slack-desktop",
+    "graphiql-app"
   ],
-  "pacman": ["firefox", "chromium", "termite"]
+  "pacman": [
+    "firefox",
+    "chromium",
+    "termite"
+  ]
 }
