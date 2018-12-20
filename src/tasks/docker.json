@@ -1,0 +1,22 @@
+{
+  "pacman": [
+    "docker",
+    "docker-compose"
+  ],
+  "systemctl": [
+    {
+      "service": "docker",
+      "state": "enable"
+    },
+    {
+      "service": "docker",
+      "state": "start"
+    }
+  ],
+  "exec": [
+    {
+      "command": "gpasswd --add $(whoami) docker",
+      "sudo": true,
+    }
+  ]
+}
