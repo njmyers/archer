@@ -1,0 +1,30 @@
+{
+  "pacman": [
+    "cups",
+    "nss-mdns"
+  ],
+  "systemctl": [
+    {
+      "service": "avahi-daemon",
+      "state": "enable"
+    },
+    {
+      "service": "org.cups.cupsd",
+      "state": "enable"
+    },
+    {
+      "service": "org.cups.cupsd",
+      "state": "restart"
+    }
+  ],
+  "exec": [
+    {
+      "command": "gpasswd --add $(whoami) sys",
+      "sudo": true
+    },
+    {
+      "command": "gpasswd --add $(whoami) lp",
+      "sudo": true
+    }
+  ]
+}
