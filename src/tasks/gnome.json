@@ -47,7 +47,7 @@
   ],
   "exec": [
     {
-      "command": "plymouth-set-default-theme script",
+      "command": "plymouth-set-default-theme solar",
       "sudo": true
     },
     {
