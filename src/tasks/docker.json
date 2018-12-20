@@ -16,7 +16,7 @@
   "exec": [
     {
       "command": "gpasswd --add $(whoami) docker",
-      "sudo": true,
+      "sudo": true
     }
   ]
 }
