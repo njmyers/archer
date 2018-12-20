@@ -6,6 +6,7 @@ import {
   aur,
   systemctl,
   createSpawn,
+  npm,
 } from './commands';
 
 import { pipeAsync } from 'smalldash';
@@ -22,6 +23,9 @@ const dispatcher = (options) => (entry) => {
     // map aur packages to download
     case 'aur':
       return () => aur(values, options);
+    // install npm packages
+    case 'npm':
+      return () => npm(values, options);
     // map out services to set the state on
     case 'systemctl':
       return pipeAsync(
