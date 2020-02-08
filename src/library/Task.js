@@ -16,16 +16,15 @@ class Task {
   }
 
   start() {
-    console.log(chalk.yellow('TASK STARTED ==> ') + this.name.toUpperCase());
+    console.log(chalk.yellow('==> TASK STARTED ') + this.name);
   }
 
   end() {
-    console.log(chalk.green('TASK COMPLETED ==> ') + this.name.toUpperCase());
+    console.log(chalk.green('==> TASK COMPLETED ') + this.name);
   }
 
-  error(error) {
-    console.log(chalk.red('TASK ERRORED ==> ') + this.name.toUpperCase());
-    console.log(error);
+  error() {
+    console.log(chalk.red('==> TASK ERRORED ') + this.name);
   }
 
   async run() {

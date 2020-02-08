@@ -1,4 +1,4 @@
-import shell from 'shelljs';
+import ps from 'child_process';
 
 const defaults = {
   stdio: 'inherit',
@@ -12,10 +12,11 @@ class Command {
 
   get command() {
     return this.args
-      .flat(10)
+      .flat(2)
+      .filter((i) => i)
       .map((string) => string.split(' '))
-      .flat(1)
-      .join(' ');
+      .flat(2)
+      .filter((i) => i);
   }
 
   process(options = {}) {
@@ -24,16 +25,19 @@ class Command {
       ...options,
     };
 
+    const [command, ...args] = this.command;
+
     if (!merged.async) {
-      return shell.exec(this.command, merged);
+      return ps.spawnSync(command, args, merged);
     }
 
     return new Promise((resolve, reject) => {
-      shell.exec(this.command, merged, (code, stdout, stderr) => {
+      const child = ps.spawn(command, args, merged);
+      child.on('close', (code) => {
         if (code === 0) {
-          resolve(code, stdout);
+          resolve(code);
         } else {
-          reject(code, stderr);
+          reject(code);
         }
       });
     });

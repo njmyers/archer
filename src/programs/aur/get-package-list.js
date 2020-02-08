@@ -1,22 +1,19 @@
-import getInstalled from './get-installed';
+import fs from 'fs';
+import path from 'path';
+
+import { AUR_DIR } from '~/paths';
 
 /**
- * Extracts the list of packages from the cli function
- * The input is variadic with options as our last argument
- * If we are passing the update flag we can check in ~/.aur
- * Maybe we will need some more lists in the future :)
- * Combine our lists at the end!
+ * Gets a list of all of directories in the ~/.aur directory
+ * If there are not aur directories they will silently fail
  */
-const getPackageList = (args) => {
-  const [options, ...packages] = args.reverse();
-
-  return {
-    options,
-    packages: [
-      ...packages.reverse(),
-      ...(options.update ? getInstalled() : []),
-    ],
-  };
+const getPackageList = () => {
+  return fs.readdirSync(AUR_DIR).filter((folderName) => {
+    // path to specific aur folder
+    const absolutePath = path.resolve(AUR_DIR, folderName);
+    // filter out files and leave only folders
+    return fs.lstatSync(absolutePath).isDirectory();
+  });
 };
 
 export default getPackageList;
