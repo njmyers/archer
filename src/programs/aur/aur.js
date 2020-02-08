@@ -2,10 +2,8 @@ import fs from 'fs';
 import path from 'path';
 import { pipeAsync } from 'smalldash';
 
-import Task from '~/library/Task';
-import noopAsync from '~/library/noop-async';
-
 import shell from '~/shell';
+import { Task, noopAsync } from '~/library';
 import { AUR_DIR } from '~/paths';
 
 import getPackageList from './get-package-list';

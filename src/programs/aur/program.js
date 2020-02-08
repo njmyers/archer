@@ -17,9 +17,6 @@ program
   .action((options, packages) => {
     aur(packages, options)
       .then(() => console.log('All tasks finished'))
-      .catch((code) => {
-        console.log(`Program exited with code ${code}`);
-        console.log(code);
-      });
+      .catch((code) => console.log(`Program exited with code ${code}`));
   })
   .parse(process.argv);
