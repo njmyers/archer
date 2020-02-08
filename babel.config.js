@@ -1,7 +1,25 @@
 module.exports = {
   plugins: [
     '@babel/plugin-proposal-object-rest-spread',
-    '@babel/plugin-transform-regenerator',
+    [
+      'module-resolver',
+      {
+        root: ['./src'],
+        alias: {
+          '^~/(.+)': './src/\\1',
+        },
+      },
+    ],
   ],
-  presets: ['@babel/preset-env', '@babel/preset-flow'],
+  presets: [
+    [
+      '@babel/preset-env',
+      {
+        targets: {
+          node: '10',
+        },
+      },
+    ],
+    '@babel/preset-flow',
+  ],
 };

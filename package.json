@@ -2,20 +2,20 @@
   "name": "@njmyers/archer",
   "version": "0.0.1",
   "description": "",
+  "license": "ISC",
+  "author": "",
   "main": "build/archer.cjs.js",
   "module": "build/archer.esm.js",
-  "scripts": {
-    "prerollup": "shx rm -rf build",
-    "rollup": "rollup -c rollup.config.js",
-    "test": "jest --watchAll",
-    "prettier": "prettier 'src/**/*.{.test.js,js,jsx,json}' --write"
-  },
   "bin": {
     "archer": "scripts/cli.js",
     "aur": "scripts/aur.js"
   },
-  "author": "",
-  "license": "ISC",
+  "scripts": {
+    "prettier": "prettier 'src/**/*.{.test.js,js,jsx,json}' --write",
+    "prerollup": "shx rm -rf build",
+    "rollup": "rollup -c rollup.config.js",
+    "test": "jest --watchAll"
+  },
   "dependencies": {
     "@njmyers/directory": "^0.0.13",
     "chalk": "^2.4.1",
@@ -29,25 +29,21 @@
   "devDependencies": {
     "@babel/core": "^7.1.2",
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
-    "@babel/plugin-transform-regenerator": "^7.0.0",
     "@babel/preset-env": "^7.1.0",
     "@babel/preset-flow": "^7.0.0",
-    "babel-core": "^7.0.0-bridge.0",
-    "babel-jest": "^23.6.0",
-    "flow-bin": "^0.82.0",
+    "@rollup/plugin-commonjs": "^11.0.2",
+    "@rollup/plugin-json": "^4.0.2",
+    "@rollup/plugin-node-resolve": "^7.1.1",
+    "babel-plugin-module-resolver": "^3.2.0",
     "husky": "^1.0.1",
-    "jest": "^23.6.0",
+    "jest": "^24.9.0",
     "lint-staged": "^7.3.0",
     "prettier": "^1.14.3",
     "regenerator-runtime": "^0.12.1",
-    "rollup": "^0.66.2",
-    "rollup-plugin-babel": "^4.0.3",
-    "rollup-plugin-commonjs": "^9.1.8",
-    "rollup-plugin-flow": "^1.1.1",
-    "rollup-plugin-json": "^3.1.0",
+    "rollup": "^1.31.0",
+    "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-node-builtins": "^2.1.2",
     "rollup-plugin-node-globals": "^1.4.0",
-    "rollup-plugin-node-resolve": "^3.4.0",
     "shx": "^0.3.2"
   }
 }

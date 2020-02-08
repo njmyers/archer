@@ -8,6 +8,10 @@
     {
       "service": "NetworkManager",
       "state": "enable"
+    },
+    {
+      "service": "systemd-networkd",
+      "state": "enable"
     }
   ]
 }

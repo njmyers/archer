@@ -1,59 +1,43 @@
 import fs from 'fs';
 import path from 'path';
-import shell from 'shelljs';
 import { pipeAsync } from 'smalldash';
-import taskRunner from '../task-runner';
-import git from './git';
-import makepkg from './makepkg';
-import namedFunction from './named-function';
-import aurDir from '../library/aur-dir';
-import validateDirectory from '../library/validate-directory';
-import acceptArgs from './accept-args';
+
+import Task from '~/library/Task';
+import Queue from '~/library/Queue';
+
+import shell from '~/shell';
+import { AUR_DIR } from '~/paths';
 
 const aur = (packages, options) => {
-  const aurPath = aurDir();
-  // return a function that returns a promise
-  const tasks = packages.map((string) => {
-    const fn = namedFunction(
-      string,
-      () =>
-        new Promise((res, rej) => {
-          const url = `https://aur.archlinux.org/${string}.git`;
-          const destination = path.resolve(aurPath, string);
+  const tasks = packages.map((pkg) => {
+    const url = `https://aur.archlinux.org/${pkg}.git`;
 
-          if (!validateDirectory(destination, { make: false })) {
-            // return a promise
-            return git(`clone ${url} ${destination}`)
-              .then(() => {
-                shell.cd(destination);
-                return makepkg('-si --needed', options);
-              })
-              .then((code) => res(code))
-              .catch((error) => rej(error));
-          } else {
-            shell.cd(destination);
-            // return a promise
-            return git(`pull`)
-              .then(() => makepkg('-si --needed', options))
-              .then((code) => res(code))
-              .catch((error) => rej(error));
-          }
-        })
+    const pipeline = [];
+    const destination = path.resolve(AUR_DIR, pkg);
+
+    if (fs.existsSync(destination)) {
+      pipeline.push(shell.git.flags('-C', destination, 'pull'));
+    } else {
+      pipeline.push(shell.git.flags('clone', url, destination));
+    }
+
+    pipeline.push(
+      shell.makepkg.flags('-si', '--needed', '--noconfirm', '--clean')
     );
 
-    return taskRunner(fn);
+    const fn = pipeAsync(
+      ...pipeline.map((command) => () => command.process({ cwd: destination }))
+    );
+
+    const task = new Task(fn, pkg, options);
+    return () => task.run();
   });
-  // construct async pipeline
-  const pipeline = pipeAsync(...tasks);
-  // return a new promise at resolution of the ENTIRE async pipelines
-  return new Promise((res, rej) => {
-    pipeline({ options })
-      .then((response) => res(response))
-      .catch((error) => rej(error));
-  });
+
+  const queue = new Queue({ concurrency: 1 });
+  queue.add(...tasks);
+  queue.start();
+
+  return queue.promise;
 };
 
-// default options
-const defaults = {};
-
-export default (...args) => acceptArgs(args, defaults, aur);
+export default aur;

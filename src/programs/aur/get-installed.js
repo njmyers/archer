@@ -1,17 +1,15 @@
 import fs from 'fs';
 import path from 'path';
-import aurDir from '../../library/aur-dir';
+import { AUR_DIR } from '~/paths';
 
 /**
  * Gets a list of all of directories in the ~/.aur directory
  * If there are not aur directories they will silently fail
  */
 const getInstalled = () => {
-  const aurPath = aurDir();
-
-  return fs.readdirSync(aurPath).filter((folderName) => {
+  return fs.readdirSync(AUR_DIR).filter((folderName) => {
     // path to specific aur folder
-    const absolutePath = path.resolve(aurPath, folderName);
+    const absolutePath = path.resolve(AUR_DIR, folderName);
     // filter out files and leave only folders
     return fs.lstatSync(absolutePath).isDirectory();
   });

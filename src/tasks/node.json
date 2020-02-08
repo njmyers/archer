@@ -9,7 +9,6 @@
     "lerna",
     "serverless",
     "source-map-explorer",
-    "flow-bin",
-    "flow-typed"
+    "parcel-bundler"
   ]
 }
