@@ -17,6 +17,7 @@ const config = {
     'os',
     'path',
     'fs',
+    'util',
   ],
   plugins: [
     json(),
