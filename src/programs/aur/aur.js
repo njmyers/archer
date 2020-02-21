@@ -78,6 +78,10 @@ const aur = (packages = [], options) => {
     tasks.push(...remove(packages, options));
   }
 
+  if (tasks.length < 1) {
+    return noopAsync();
+  }
+
   return pipeAsync(...tasks)();
 };
 
