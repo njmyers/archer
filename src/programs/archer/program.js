@@ -4,7 +4,7 @@ import directory from '@njmyers/directory';
 import program from 'commander';
 import update from 'update-notifier';
 import getConfig from './get-config';
-import runAll from '../../run-all';
+import runTasks from './run-tasks';
 // package.json
 import pkg from '../../../package.json';
 
@@ -12,6 +12,9 @@ update({ pkg }).notify();
 
 program
   .version(pkg.version, '-v --version')
+  .option('-S --sync', 'Sync package targets', false)
+  .option('-y --refresh', 'Download a fresh copy of all packages', false)
+  .option('-u --sysupgrade', 'Build and upgrade all packages', false)
   .option('-s --silent', 'toggles silent mode', false)
   .option('-g --generate', 'refresh and generate a new configuration', false)
   .usage('[config.json]')
@@ -26,7 +29,7 @@ program
     if (configs.length < 1) {
       getConfig(cleanOptions)
         .then((config) => {
-          const pipeline = runAll(config, cleanOptions);
+          const pipeline = runTasks(config, cleanOptions);
 
           pipeline()
             .then((response) => {
@@ -52,7 +55,7 @@ program
           {}
         );
 
-      const pipeline = runAll(config, cleanOptions);
+      const pipeline = runTasks(config, cleanOptions);
 
       pipeline()
         .then((response) => {
